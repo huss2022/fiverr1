@@ -1,586 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل النجاح التفاعلي على فايفر</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: A thematic, dashboard-style Single Page Application. The structure is designed to follow a freelancer's journey: 1. Foundation (Profile/Gig), 2. Profitability (Pricing), 3. Visibility (Marketing/SEO), 4. Growth (Client Mgt/Levels), and 5. Challenges. This non-linear, task-oriented structure is more intuitive for learning and quick reference than the original report's linear format. Key interactions include tab-based navigation to switch between themes, interactive charts for visualizing data (seller levels, commission), and clickable cards to reveal detailed information, preventing overload and encouraging exploration. -->
-    <!-- Visualization & Content Choices: Report Info: Seller level requirements -> Goal: Inform/Compare -> Viz: Interactive Bar Chart (Chart.js) -> Interaction: Hover for details -> Justification: Makes abstract progression data tangible and motivational. Report Info: 20% commission -> Goal: Inform -> Viz: Doughnut Chart (Chart.js) -> Justification: Instantly clarifies the earnings split. Report Info: Ranking factors & Marketing channels -> Goal: Organize/Compare -> Presentation: Interactive Card Grid (HTML/Tailwind/JS) -> Interaction: Click to expand for details -> Justification: Breaks down dense information into digestible, user-triggered chunks. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #F8F9FA;
-        }
-        .active-tab {
-            border-bottom: 2px solid #1DBF73;
-            color: #1DBF73;
-            font-weight: 700;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .card {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 40vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-    </style>
-</head>
-<body class="text-gray-800">
-
-    <div class="container mx-auto px-4 py-8">
-        
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">أسرار البيع على فايفر</h1>
-            <p class="text-lg text-gray-600">دليلك التفاعلي لتحقيق النجاح والتميز في عالم العمل الحر</p>
-        </header>
-
-        <nav class="bg-white rounded-lg shadow-md mb-8 sticky top-4 z-10">
-            <ul id="tabs" class="flex flex-wrap justify-center items-center p-2 text-sm md:text-base">
-                <li class="cursor-pointer py-2 px-4 text-gray-600 active-tab" data-tab="foundation">الأساسيات</li>
-                <li class="cursor-pointer py-2 px-4 text-gray-600" data-tab="pricing">التسعير والربحية</li>
-                <li class="cursor-pointer py-2 px-4 text-gray-600" data-tab="visibility">الظهور والتسويق</li>
-                <li class="cursor-pointer py-2 px-4 text-gray-600" data-tab="growth">إدارة العملاء والنمو</li>
-                <li class="cursor-pointer py-2 px-4 text-gray-600" data-tab="challenges">تحديات وحلول</li>
-            </ul>
-        </nav>
-
-        <main>
-            <div id="foundation" class="tab-content active">
-                <div class="text-center mb-12">
-                     <h2 class="text-3xl font-bold mb-2">بناء الأساس المتين</h2>
-                     <p class="max-w-3xl mx-auto text-gray-600">
-                         هذا هو حجر الزاوية لرحلتك على فايفر. في هذا القسم، ستتعلم كيفية بناء ملف شخصي احترافي وصياغة خدمات (Gigs) لا يمكن مقاومتها، فهي واجهتك الأولى أمام العملاء وأهم أدواتك لجذب الانتباه وبناء الثقة.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="card p-6">
-                        <h3 class="text-2xl font-bold mb-4 text-green-600">إنشاء حساب احترافي</h3>
-                         <ul class="space-y-3 text-gray-700 list-disc list-inside">
-                            <li><strong>اسم مستخدم احترافي:</strong> اختره بعناية، فهو لا يتغير.</li>
-                            <li><strong>صورة شخصية معبرة:</strong> صورة واضحة ومبتسمة تبني الثقة فوراً.</li>
-                            <li><strong>ملف شخصي متكامل:</strong> املأ جميع أقسام الخبرات والمهارات والشهادات.</li>
-                            <li><strong>سر التخصص:</strong> ركز على مجال فرعي (Niche) لتُصبح خبيراً فيه وتقلل المنافسة.</li>
-                        </ul>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="text-2xl font-bold mb-4 text-green-600">صياغة خدمة (Gig) عالية التحويل</h3>
-                         <div id="gigAccordion">
-                            <div class="border-b">
-                                <button class="w-full text-right font-bold py-3 flex justify-between items-center accordion-toggle">
-                                    <span>عنوان جذاب ومُحسّن للبحث (SEO)</span>
-                                    <span>+</span>
-                                </button>
-                                <div class="accordion-content">
-                                    <p class="pt-2 pb-4 text-gray-600">يجب أن يكون قصيراً، مباشراً، ويتضمن الكلمة المفتاحية الرئيسية في بدايته. الصيغة هي "سأقوم بـ [خدمتك]".</p>
-                                </div>
-                            </div>
-                             <div class="border-b">
-                                <button class="w-full text-right font-bold py-3 flex justify-between items-center accordion-toggle">
-                                    <span>وصف مقنع يركز على قيمة العميل</span>
-                                    <span>+</span>
-                                </button>
-                                <div class="accordion-content">
-                                    <p class="pt-2 pb-4 text-gray-600">اشرح كيف ستحل خدمة مشكلة العميل وما هي الفائدة التي سيحصل عليها. استخدم القوائم لتسهيل القراءة وتجنب الأخطاء الإملائية.</p>
-                                </div>
-                            </div>
-                            <div class="border-b">
-                                <button class="w-full text-right font-bold py-3 flex justify-between items-center accordion-toggle">
-                                    <span>صور وفيديو عالي الجودة</span>
-                                    <span>+</span>
-                                </button>
-                                <div class="accordion-content">
-                                    <p class="pt-2 pb-4 text-gray-600">العناصر المرئية هي أول ما يجذب العين. الخدمات التي تحتوي على فيديو قصير (30-60 ثانية) تحظى بتفاعل أعلى بنسبة تصل إلى 200%.</p>
-                                </div>
-                            </div>
-                            <div>
-                                <button class="w-full text-right font-bold py-3 flex justify-between items-center accordion-toggle">
-                                    <span>الأسئلة الشائعة (FAQs)</span>
-                                    <span>+</span>
-                                </button>
-                                <div class="accordion-content">
-                                    <p class="pt-2 pb-4 text-gray-600">استبق استفسارات العملاء وأجب عليها. هذا يوفر الوقت ويبني الثقة ويظهر مدى احترافيتك.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-6 mt-8">
-                    <h3 class="text-2xl font-bold mb-4 text-green-600">✨ مولد وصف الخدمة الذكي</h3>
-                    <p class="text-gray-600 mb-4">أدخل بعض المعلومات عن خدمتك ودع الذكاء الاصطناعي يصيغ لك وصفًا جذابًا.</p>
-                    <div class="mb-4">
-                        <label for="serviceKeywords" class="block text-gray-700 text-sm font-bold mb-2">كلمات مفتاحية للخدمة (مثال: تصميم شعارات، هوية بصرية):</label>
-                        <input type="text" id="serviceKeywords" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="أدخل الكلمات المفتاحية">
-                    </div>
-                    <div class="mb-4">
-                        <label for="targetAudience" class="block text-gray-700 text-sm font-bold mb-2">الجمهور المستهدف (مثال: شركات ناشئة، رواد أعمال جدد):</label>
-                        <input type="text" id="targetAudience" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="أدخل الجمهور المستهدف">
-                    </div>
-                    <div class="mb-4">
-                        <label for="uniqueSellingPoints" class="block text-gray-700 text-sm font-bold mb-2">نقاط البيع الفريدة (مثال: تسليم سريع، مراجعات غير محدودة):</label>
-                        <input type="text" id="uniqueSellingPoints" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="أدخل نقاط البيع الفريدة">
-                    </div>
-                    <button id="generateGigDescription" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200">
-                        ✨ توليد الوصف
-                    </button>
-                    <div id="gigDescriptionLoading" class="mt-4 text-center text-gray-500 hidden">جاري التوليد...</div>
-                    <div class="mt-4">
-                        <label for="generatedGigDescription" class="block text-gray-700 text-sm font-bold mb-2">الوصف المتولد:</label>
-                        <textarea id="generatedGigDescription" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-48" readonly placeholder="سيظهر الوصف الذي تم توليده هنا..."></textarea>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="pricing" class="tab-content">
-                 <div class="text-center mb-12">
-                     <h2 class="text-3xl font-bold mb-2">التسعير والربحية</h2>
-                     <p class="max-w-3xl mx-auto text-gray-600">
-                        التسعير ليس مجرد رقم، بل هو استراتيجية. هنا ستتعلم كيف تضع أسعاراً تنافسية ومربحة في نفس الوقت، مع الأخذ في الاعتبار عمولة فايفر، وكيف تزيد من قيمة كل طلب عبر البيع الإضافي والذكي.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="card p-6">
-                        <h3 class="text-2xl font-bold mb-4 text-center">فهم عمولة فايفر (20%)</h3>
-                        <p class="text-center text-gray-600 mb-4">يقتطع فايفر 20% من كل طلب. هذا الرسم البياني يوضح كيف يتم تقسيم 100 دولار.</p>
-                        <div class="chart-container h-64 max-h-64">
-                            <canvas id="commissionChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="text-2xl font-bold mb-4">استراتيجيات التسعير الذكية</h3>
-                        <ul class="space-y-4 text-gray-700">
-                            <li class="flex items-start">
-                                <span class="text-green-500 mr-2 mt-1">✓</span>
-                                <div><strong>حساب العمولة:</strong> لتكسب 80$ صافي، يجب تسعير خدمتك بـ 100$. القاعدة هي: (الربح الصافي المستهدف / 0.8).</div>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-green-500 mr-2 mt-1">✓</span>
-                                <div><strong>استخدام الباقات (Packages):</strong> قدم 3 باقات (أساسية، قياسية، مميزة) لتلبية احتياجات مختلفة وزيادة متوسط قيمة الطلب.</div>
-                            </li>
-                             <li class="flex items-start">
-                                <span class="text-green-500 mr-2 mt-1">✓</span>
-                                <div><strong>البيع الإضافي والمتقاطع (Extras):</strong> قدم خدمات إضافية مثل "التسليم السريع" أو "ملف المصدر" لزيادة أرباحك من كل عميل.</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="visibility" class="tab-content">
-                <div class="text-center mb-12">
-                     <h2 class="text-3xl font-bold mb-2">تعزيز الظهور وجذب العملاء</h2>
-                     <p class="max-w-3xl mx-auto text-gray-600">
-                        امتلاك خدمة رائعة لا يكفي إذا لم يرها أحد. هذا القسم يكشف أسرار خوارزمية فايفر وكيفية تحسين خدمتك لتتصدر نتائج البحث، بالإضافة إلى استراتيجيات التسويق داخل وخارج المنصة لجلب سيل مستمر من العملاء.
-                    </p>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-6">عوامل الترتيب الأساسية في خوارزمية فايفر</h3>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                     <div class="card p-4 text-center">
-                        <div class="text-4xl mb-2">🖱️</div>
-                        <h4 class="font-bold text-lg">معدل النقر (CTR)</h4>
-                        <p class="text-sm text-gray-600">نسبة من يرون خدمتك وينقرون عليها. تحسينه يتطلب عنواناً وصورة جذابة.</p>
-                    </div>
-                    <div class="card p-4 text-center">
-                        <div class="text-4xl mb-2">🛒</div>
-                        <h4 class="font-bold text-lg">معدل التحويل</h4>
-                        <p class="text-sm text-gray-600">نسبة من ينقرون على خدمتك ويشترونها بالفعل. يتأثر بجودة الوصف والأسعار.</p>
-                    </div>
-                     <div class="card p-4 text-center">
-                        <div class="text-4xl mb-2">⭐</div>
-                        <h4 class="font-bold text-lg">تقييمات العملاء</h4>
-                        <p class="text-sm text-gray-600">التقييمات العالية تبني الثقة وتدفع خدمتك للأمام في نتائج البحث.</p>
-                    </div>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-6">استراتيجيات التسويق</h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="card p-6">
-                        <h4 class="text-xl font-bold mb-3">داخل فايفر: طلبات المشترين</h4>
-                        <p class="text-gray-700">خاصة للمبتدئين، قسم "Buyer Requests" هو منجم ذهب. ابحث يومياً عن طلبات مناسبة وقدم عروضاً مخصصة ومقنعة لإقناع العميل باختيارك.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h4 class="text-xl font-bold mb-3">خارج فايفر: بناء علامتك التجارية</h4>
-                        <p class="text-gray-700">لا تعتمد على فايفر فقط. سوّق لخدماتك على منصات مثل <strong>لينكد إن</strong>، أو أنشئ مدونة شخصية لعرض خبراتك وجذب العملاء مباشرة.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="growth" class="tab-content">
-                <div class="text-center mb-12">
-                     <h2 class="text-3xl font-bold mb-2">إدارة العملاء والنمو المستدام</h2>
-                     <p class="max-w-3xl mx-auto text-gray-600">
-                         النجاح ليس سباق سرعة بل ماراثون. تعلم هنا فن التواصل مع العملاء لتحويلهم إلى معجبين دائمين، وكيفية التعامل مع التقييمات السلبية باحترافية، واستكشف رحلة الترقي في مستويات البائعين للوصول إلى القمة.
-                    </p>
-                </div>
-                <div class="card p-6 mb-8">
-                    <h3 class="text-2xl font-bold text-center mb-4">رحلة الترقي: مستويات البائعين على فايفر</h3>
-                    <p class="text-center text-gray-600 mb-4">كل مستوى يفتح لك مزايا جديدة ويزيد من ظهورك. هذا الرسم البياني يوضح المتطلبات الأساسية للوصول لكل مستوى. مرر الفأرة فوق كل شريط لمعرفة التفاصيل الكاملة.</p>
-                    <div class="chart-container">
-                        <canvas id="sellerLevelsChart"></canvas>
-                    </div>
-                </div>
-                 <div class="grid md:grid-cols-2 gap-8">
-                     <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-3">فن التواصل مع العملاء</h3>
-                        <ul class="space-y-2 text-gray-700 list-disc list-inside">
-                            <li><strong>كن استباقياً:</strong> حدد نطاق العمل بوضوح من البداية.</li>
-                            <li><strong>تجنب "تضخم النطاق":</strong> أي عمل إضافي يجب أن يكون بمقابل إضافي.</li>
-                            <li><strong>تعامل بحكمة مع التعديلات:</strong> حدد عدد المراجعات مسبقاً في باقاتك.</li>
-                        </ul>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-3">التعامل مع التقييمات السلبية</h3>
-                        <p class="text-gray-700">لا مفر منها، ولكن طريقة ردك هي الأهم. استمع للعميل، تعاطف معه، وحاول حل المشكلة. ردك الاحترافي يراه العملاء المستقبليون ويقدرونه.</p>
-                    </div>
-                </div>
-
-                <div class="card p-6 mt-8">
-                    <h3 class="text-2xl font-bold mb-4 text-green-600">✨ مساعد الرد على التقييمات السلبية</h3>
-                    <p class="text-gray-600 mb-4">احصل على اقتراحات لردود احترافية على التقييمات السلبية.</p>
-                    <div class="mb-4">
-                        <label for="customerReview" class="block text-gray-700 text-sm font-bold mb-2">تقييم العميل السلبي:</label>
-                        <textarea id="customerReview" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32" placeholder="أدخل تقييم العميل هنا..."></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label for="yourPerspective" class="block text-gray-700 text-sm font-bold mb-2">وجهة نظرك (اختياري، للمساعدة في تخصيص الرد):</label>
-                        <textarea id="yourPerspective" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-24" placeholder="كيف ترى الموقف؟ (مثال: سوء فهم، طلب خارج النطاق)..."></textarea>
-                    </div>
-                    <button id="generateReviewResponse" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200">
-                        ✨ توليد الرد
-                    </button>
-                    <div id="reviewResponseLoading" class="mt-4 text-center text-gray-500 hidden">جاري التوليد...</div>
-                    <div class="mt-4">
-                        <label for="generatedReviewResponse" class="block text-gray-700 text-sm font-bold mb-2">الرد المتولد:</label>
-                        <textarea id="generatedReviewResponse" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-48" readonly placeholder="سيظهر الرد الذي تم توليده هنا..."></textarea>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="challenges" class="tab-content">
-                <div class="text-center mb-12">
-                     <h2 class="text-3xl font-bold mb-2">التحديات الشائعة والحلول</h2>
-                     <p class="max-w-3xl mx-auto text-gray-600">
-                        كل رحلة نجاح مليئة بالعقبات. هذا القسم يقدم لك حلولاً عملية لأشهر التحديات التي تواجه البائعين على فايفر، من المنافسة الشديدة إلى إدارة الإلغاءات، لتحويلها من عوائق إلى فرص للتعلم والتميز.
-                    </p>
-                </div>
-                <div class="space-y-6">
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">التحدي: المنافسة الشديدة</h3>
-                        <p class="text-gray-700"><strong>الحل:</strong> التميز هو المفتاح. لا تنافس بالسعر فقط، بل بالجودة والتخصص. ابحث عن مجال فرعي (Niche) فريد، وقدم قيمة لا يستطيع الآخرون تقديمها، وابنِ معرض أعمال قوي يثبت مهارتك.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">التحدي: عمولة فايفر المرتفعة (20%)</h3>
-                        <p class="text-gray-700"><strong>الحل:</strong> فكر فيها كتكلفة تسويق للوصول إلى ملايين العملاء. ادمج العمولة في تسعيرك منذ البداية وركز على البيع الإضافي (Gig Extras) لزيادة متوسط قيمة كل طلب، مما يعوض تأثير العمولة.</p>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">التحدي: إدارة الإلغاءات والنزاعات</h3>
-                        <p class="text-gray-700"><strong>الحل:</strong> الوقاية خير من العلاج. وثّق كل شيء كتابياً داخل المنصة. تواصل بوضوح لتحديد التوقعات بدقة. إذا حدث نزاع، حاول حله ودياً مع العميل أولاً. إذا كان الإلغاء غير عادل، تواصل مع دعم فايفر.</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-        
-        <footer class="text-center mt-12 text-gray-500 text-sm">
-            <p>تم إنشاء هذا الدليل التفاعلي لتسهيل استيعاب "أسرار البيع على فايفر".</p>
-            <p>بالتوفيق في رحلتك في عالم العمل الحر!</p>
-        </footer>
-
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('#tabs li');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active-tab'));
-                    tab.classList.add('active-tab');
-                    
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    document.getElementById(tab.dataset.tab).classList.add('active');
-                });
-            });
-
-            const accordionToggles = document.querySelectorAll('.accordion-toggle');
-            accordionToggles.forEach(toggle => {
-                toggle.addEventListener('click', () => {
-                    const content = toggle.nextElementSibling;
-                    const icon = toggle.querySelector('span:last-child');
-                    
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        icon.textContent = '+';
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        icon.textContent = '-';
-                    }
-                });
-            });
-
-            const commissionData = {
-                labels: ['أرباحك الصافية (80%)', 'عمولة فايفر (20%)'],
-                datasets: [{
-                    data: [80, 20],
-                    backgroundColor: ['#1DBF73', '#E8E2D9'],
-                    hoverBackgroundColor: ['#18A865', '#D1CABE'],
-                    borderColor: '#FFFFFF',
-                    borderWidth: 2,
-                }]
-            };
-            const commissionCtx = document.getElementById('commissionChart').getContext('2d');
-            new Chart(commissionCtx, {
-                type: 'doughnut',
-                data: commissionData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                font: {
-                                    family: 'Tajawal'
-                                }
-                            }
-                        },
-                        tooltip: {
-                            bodyFont: {
-                                family: 'Tajawal'
-                            },
-                            titleFont: {
-                                family: 'Tajawal'
-                            }
-                        }
-                    },
-                    cutout: '70%'
-                }
-            });
-
-            const sellerLevelsData = {
-                labels: ['بائع جديد', 'المستوى الأول', 'المستوى الثاني', 'الأعلى تقييماً'],
-                datasets: [{
-                    label: 'الطلبات المكتملة المطلوبة',
-                    data: [0, 10, 50, 100],
-                    backgroundColor: [
-                        '#A0AEC0',
-                        '#63B3ED',
-                        '#4FD1C5',
-                        '#F6E05E'
-                    ],
-                    borderColor: [
-                        '#718096',
-                        '#4299E1',
-                        '#38B2AC',
-                        '#D69E2E'
-                    ],
-                    borderWidth: 1
-                }]
-            };
-            const sellerLevelsCtx = document.getElementById('sellerLevelsChart').getContext('2d');
-            new Chart(sellerLevelsCtx, {
-                type: 'bar',
-                data: sellerLevelsData,
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'عدد الطلبات',
-                                font: { family: 'Tajawal', size: 14 }
-                            }
-                        },
-                        y: {
-                           ticks: {
-                               font: { family: 'Tajawal', size: 12 }
-                           }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            rtl: true,
-                            bodyFont: { family: 'Tajawal' },
-                            titleFont: { family: 'Tajawal' },
-                            callbacks: {
-                                label: function(context) {
-                                    const level = context.label;
-                                    let details = [];
-                                    if (level === 'بائع جديد') {
-                                        details.push('لا توجد متطلبات.');
-                                    } else if (level === 'المستوى الأول') {
-                                        details.push('إكمال 10 طلبات');
-                                        details.push('نشط لـ 60 يوماً');
-                                        details.push('أرباح 400$');
-                                        details.push('تقييم 4.7+');
-                                    } else if (level === 'المستوى الثاني') {
-                                        details.push('إكمال 50 طلباً');
-                                        details.push('نشط لـ 120 يوماً');
-                                        details.push('أرباح 2,000$');
-                                         details.push('تقييم 4.7+');
-                                    } else if (level === 'الأعلى تقييماً') {
-                                        details.push('إكمال 100 طلب');
-                                        details.push('نشط لـ 180 يوماً');
-                                        details.push('أرباح 20,000$');
-                                        details.push('اختيار يدوي من فايفر');
-                                    }
-                                    return details;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Gemini API Integration for Gig Description
-            const generateGigDescriptionBtn = document.getElementById('generateGigDescription');
-            const serviceKeywordsInput = document.getElementById('serviceKeywords');
-            const targetAudienceInput = document.getElementById('targetAudience');
-            const uniqueSellingPointsInput = document.getElementById('uniqueSellingPoints');
-            const generatedGigDescriptionTextarea = document.getElementById('generatedGigDescription');
-            const gigDescriptionLoading = document.getElementById('gigDescriptionLoading');
-
-            generateGigDescriptionBtn.addEventListener('click', async () => {
-                const serviceKeywords = serviceKeywordsInput.value;
-                const targetAudience = targetAudienceInput.value;
-                const uniqueSellingPoints = uniqueSellingPointsInput.value;
-
-                if (!serviceKeywords) {
-                    generatedGigDescriptionTextarea.value = "الرجاء إدخال الكلمات المفتاحية للخدمة.";
-                    return;
-                }
-
-                gigDescriptionLoading.classList.remove('hidden');
-                generateGigDescriptionBtn.disabled = true;
-                generatedGigDescriptionTextarea.value = '';
-
-                let chatHistory = [];
-                const prompt = `أنا بائع جديد على فايفر وأرغب في إنشاء وصف لخدمة معينة. هذه هي الكلمات المفتاحية المتعلقة بخدمتي: ${serviceKeywords}. الجمهور المستهدف هم: ${targetAudience}. نقاط البيع الفريدة لخدمتي هي: ${uniqueSellingPoints}. يرجى صياغة وصف جذاب ومقنع لخدمتي على فايفر باللغة العربية، مع التركيز على الفوائد التي سيحصل عليها العميل، وتضمين دعوة للعمل. اجعله احترافياً ومُحسناً لمحركات البحث قدر الإمكان.`;
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        generatedGigDescriptionTextarea.value = result.candidates[0].content.parts[0].text;
-                    } else {
-                        generatedGigDescriptionTextarea.value = "عذراً، لم أتمكن من توليد الوصف. الرجاء المحاولة مرة أخرى.";
-                    }
-                } catch (error) {
-                    console.error('Error generating gig description:', error);
-                    generatedGigDescriptionTextarea.value = "حدث خطأ أثناء الاتصال بالخدمة. الرجاء التأكد من اتصالك بالإنترنت والمحاولة لاحقاً.";
-                } finally {
-                    gigDescriptionLoading.classList.add('hidden');
-                    generateGigDescriptionBtn.disabled = false;
-                }
-            });
-
-            // Gemini API Integration for Negative Review Response
-            const generateReviewResponseBtn = document.getElementById('generateReviewResponse');
-            const customerReviewInput = document.getElementById('customerReview');
-            const yourPerspectiveInput = document.getElementById('yourPerspective');
-            const generatedReviewResponseTextarea = document.getElementById('generatedReviewResponse');
-            const reviewResponseLoading = document.getElementById('reviewResponseLoading');
-
-            generateReviewResponseBtn.addEventListener('click', async () => {
-                const customerReview = customerReviewInput.value;
-                const yourPerspective = yourPerspectiveInput.value;
-
-                if (!customerReview) {
-                    generatedReviewResponseTextarea.value = "الرجاء إدخال تقييم العميل السلبي.";
-                    return;
-                }
-
-                reviewResponseLoading.classList.remove('hidden');
-                generateReviewResponseBtn.disabled = true;
-                generatedReviewResponseTextarea.value = '';
-
-                let chatHistory = [];
-                let prompt = `تلقيت التقييم السلبي التالي على فايفر: '${customerReview}'.`;
-                if (yourPerspective) {
-                    prompt += ` من وجهة نظري، ${yourPerspective}.`;
-                }
-                prompt += ` يرجى صياغة رد مهذب واحترافي على هذا التقييم، يُظهر تفهمي لمخاوف العميل، ويقدم حلاً (إذا أمكن)، ويُظهر أنني أتعلم من التجربة. يجب أن يكون الرد بناءً ويهدف إلى الحفاظ على سمعتي.`;
-                
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        generatedReviewResponseTextarea.value = result.candidates[0].content.parts[0].text;
-                    } else {
-                        generatedReviewResponseTextarea.value = "عذراً، لم أتمكن من توليد الرد. الرجاء المحاولة مرة أخرى.";
-                    }
-                } catch (error) {
-                    console.error('Error generating review response:', error);
-                    generatedReviewResponseTextarea.value = "حدث خطأ أثناء الاتصال بالخدمة. الرجاء التأكد من اتصالك بالإنترنت والمحاولة لاحقاً.";
-                } finally {
-                    reviewResponseLoading.classList.add('hidden');
-                    generateReviewResponseBtn.disabled = false;
-                }
-            });
-        });
-    </script>
-</body>
-</html>
