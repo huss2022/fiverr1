@@ -500,7 +500,7 @@
                 const prompt = `أنا بائع جديد على فايفر وأرغب في إنشاء وصف لخدمة معينة. هذه هي الكلمات المفتاحية المتعلقة بخدمتي: ${serviceKeywords}. الجمهور المستهدف هم: ${targetAudience}. نقاط البيع الفريدة لخدمتي هي: ${uniqueSellingPoints}. يرجى صياغة وصف جذاب ومقنع لخدمتي على فايفر باللغة العربية، مع التركيز على الفوائد التي سيحصل عليها العميل، وتضمين دعوة للعمل. اجعله احترافياً ومُحسناً لمحركات البحث قدر الإمكان.`;
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = "";
+                const apiKey = "AIzaSyC2QEcCK8EKnNn_hi3GNsKWHn0aLLlPI5A";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 try {
@@ -555,7 +555,7 @@
                 
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = "";
+                const apiKey = "AIzaSyC2QEcCK8EKnNn_hi3GNsKWHn0aLLlPI5A";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 try {
